@@ -4,8 +4,8 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: corepack enable && corepack prepare pnpm@10.18.0 --activate && pnpm install --frozen-lockfile && pnpm build
-    startCommand: pnpm db:migrate && pnpm start
+    buildCommand: corepack pnpm@10.18.0 install --frozen-lockfile && corepack pnpm@10.18.0 build
+startCommand: corepack pnpm@10.18.0 db:migrate && corepack pnpm@10.18.0 start
     healthCheckPath: /api/health
     autoDeployTrigger: commit
     envVars:
