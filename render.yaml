@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: cea-cantor-evaluaciones
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: corepack enable && corepack prepare pnpm@10.18.0 --activate && pnpm install --frozen-lockfile && pnpm build
+    startCommand: pnpm db:migrate && pnpm start
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: MIGRATION_DATABASE_URL
+        sync: false
+      - key: OPERATOR_PASSWORD
+        sync: false
+      - key: DB_POOL_MAX
+        value: "5"
